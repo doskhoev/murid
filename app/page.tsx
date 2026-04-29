@@ -24,16 +24,6 @@ export default function Home() {
     <div className="flex min-h-dvh flex-col">
       <SiteHeader />
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 py-10 sm:px-6 sm:py-12">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-          Справочник
-        </h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">
-          Статьи в формате Markdown из репозитория{" "}
-          <code className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-sm text-foreground">
-            content/articles
-          </code>
-          .
-        </p>
 
         {articles.length === 0 ? (
           <p className="mt-8 text-base leading-relaxed text-muted-foreground">
@@ -48,7 +38,7 @@ export default function Home() {
             с frontmatter (title, date, description).
           </p>
         ) : (
-          <ul className="mt-10 flex flex-col gap-3 sm:gap-4">
+          <ul className="flex flex-col gap-3 sm:gap-4">
             {articles.map((article) => (
               <li key={article.slug}>
                 <Link
