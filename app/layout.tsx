@@ -84,7 +84,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-dvh antialiased`}
       >
         <Providers>
-          <div className="min-h-dvh bg-background text-foreground">{children}</div>
+          <div className="site-shell relative isolate min-h-dvh bg-background text-foreground">{children}</div>
         </Providers>
       </body>
     </html>

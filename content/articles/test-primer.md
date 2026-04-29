@@ -18,6 +18,14 @@ slug: test-primer
 
 مَرْحَبًا بِكُمْ فِي مُرِيد — مِثَالٌ أَخَرُ بِخَطٍّ أَبْسَطَ: اليوم جميل والشمس مشرقة.
 
+### Озвучка (пример)
+
+Клик по арабской фразе воспроизводит аудио (файл в `public/audio/test-primer/`):
+
+<button type="button" class="voice-sentence" data-audio="/audio/test-primer/demo.ogg">السَّلَامُ عَلَيْكُمْ</button>
+
+*Сейчас это короткая заглушка (~1 с); замените `demo.ogg` своей записью. В Markdown: `<button type="button" class="voice-sentence" data-audio="/путь/к.mp3">текст</button>`.*
+
 ## Примеры размеров арабского текста
 
 В Markdown нельзя задать произвольный `font-size` без HTML (его режет санитайзер). Зато **разные уровни заголовков** дают разную крупность — ниже только арабский текст в `h3`, `h4` и обычном абзаце (стили в `globals.css` для `.markdown-body`).

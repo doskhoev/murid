@@ -194,9 +194,11 @@
   --sidebar-ring: oklch(0.708 0 0);
   --murid-logo-primary: #17480f;
   --murid-logo-secondary: #ffffff;
+  --bg-ornament-opacity: 0.1;
 }
 
 .dark {
+  --bg-ornament-opacity: 0.1;
   --background: oklch(0.28 0.01 260);
   --foreground: oklch(0.96 0 0);
   --card: oklch(0.32 0.01 260);
@@ -429,6 +431,36 @@
   color: var(--muted-foreground);
 }
 
+.markdown-body audio {
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+  margin: 0.75rem 0 1rem;
+}
+
+/* Кликабельная фраза с озвучкой (см. VoiceSentence) */
+.markdown-body .voice-sentence {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  display: inline;
+  text-align: inherit;
+}
+
+.markdown-body .voice-sentence:hover {
+  opacity: 0.88;
+}
+
+.markdown-body .voice-sentence[data-playing="true"] {
+  text-decoration-style: solid;
+}
+
 .markdown-body pre {
   overflow-x: auto;
   border-radius: 0.5rem;
@@ -464,4 +496,27 @@
   margin: 2rem 0;
   border: 0;
   border-top: 1px solid var(--border);
+}
+
+/* Фоновый SVG-орнамент (контуры), см. public/bg-girih.svg */
+.site-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.site-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/bg-girih.svg");
+  background-repeat: repeat;
+  background-size: 96px 96px;
+  opacity: var(--bg-ornament-opacity);
+}
+
+.site-shell > * {
+  position: relative;
+  z-index: 1;
 }

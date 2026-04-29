@@ -1,7 +1,4 @@
-import ReactMarkdown from "react-markdown";
-import rehypeSanitize from "rehype-sanitize";
-import remarkGfm from "remark-gfm";
-import { rehypeDirAuto } from "@/lib/rehype-dir-auto";
+import { ArticleMarkdown } from "@/components/article-markdown";
 
 type ArticleBodyProps = {
   markdown: string;
@@ -10,12 +7,7 @@ type ArticleBodyProps = {
 export function ArticleBody({ markdown }: ArticleBodyProps) {
   return (
     <div className="markdown-body">
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeSanitize, rehypeDirAuto]}
-      >
-        {markdown}
-      </ReactMarkdown>
+      <ArticleMarkdown markdown={markdown} />
     </div>
   );
 }
