@@ -76,10 +76,10 @@ export default async function ArticlePage({ params }: PageProps) {
         </div>
         <p className="mt-12 text-sm text-muted-foreground">
           <Link
-            href="/articles"
+            href="/"
             className="text-primary underline underline-offset-4 hover:opacity-90"
           >
-            Все статьи
+            На главную
           </Link>
         </p>
       </article>

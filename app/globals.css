@@ -401,6 +401,16 @@
   color: var(--foreground);
 }
 
+.markdown-body ul {
+  list-style-type: disc;
+  list-style-position: outside;
+}
+
+.markdown-body ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+}
+
 .markdown-body li {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
