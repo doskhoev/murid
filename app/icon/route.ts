@@ -1,0 +1,107 @@
+import { NextRequest, NextResponse } from "next/server";
+
+type Accent =
+  | "default"
+  | "blue"
+  | "green"
+  | "purple"
+  | "orange"
+  | "red"
+  | "pink"
+  | "yellow"
+  | "lightBlue";
+type Theme = "light" | "dark" | "system";
+
+const ACCENT_HEX: Record<
+  Exclude<Accent, "default">,
+  { light: string; dark: string }
+> = {
+  blue: { light: "#3b82f6", dark: "#60a5fa" },
+  green: { light: "#22c55e", dark: "#4ade80" },
+  purple: { light: "#a855f7", dark: "#c084fc" },
+  orange: { light: "#f97316", dark: "#fb923c" },
+  red: { light: "#ef4444", dark: "#f87171" },
+  pink: { light: "#ec4899", dark: "#f472b6" },
+  yellow: { light: "#eab308", dark: "#facc15" },
+  lightBlue: { light: "#38bdf8", dark: "#60a5fa" },
+};
+
+function isValidAccent(value: string | undefined): value is Accent {
+  return (
+    value === "default" ||
+    value === "blue" ||
+    value === "green" ||
+    value === "purple" ||
+    value === "orange" ||
+    value === "red" ||
+    value === "pink" ||
+    value === "yellow" ||
+    value === "lightBlue"
+  );
+}
+
+function isValidTheme(value: string | undefined): value is Theme {
+  return value === "light" || value === "dark" || value === "system";
+}
+
+function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+  const m = /^#([0-9a-fA-F]{6})$/.exec(hex);
+  if (!m) return null;
+  const v = m[1];
+  return {
+    r: parseInt(v.slice(0, 2), 16),
+    g: parseInt(v.slice(2, 4), 16),
+    b: parseInt(v.slice(4, 6), 16),
+  };
+}
+
+function getContrastingFg(bgHex: string): "#000000" | "#ffffff" {
+  const rgb = hexToRgb(bgHex);
+  if (!rgb) return "#ffffff";
+  const lum = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
+  return lum > 160 ? "#000000" : "#ffffff";
+}
+
+export async function GET(request: NextRequest) {
+  const accentCookieRaw = request.cookies.get("murid-accent")?.value;
+  const themeCookieRaw = request.cookies.get("murid-theme")?.value;
+  const resolvedThemeRaw = request.cookies.get("murid-theme-resolved")?.value;
+
+  const accent: Accent = isValidAccent(accentCookieRaw)
+    ? accentCookieRaw
+    : "green";
+  const themePref: Theme = isValidTheme(themeCookieRaw)
+    ? themeCookieRaw
+    : "dark";
+  const resolvedTheme: "light" | "dark" =
+    resolvedThemeRaw === "light" || resolvedThemeRaw === "dark"
+      ? resolvedThemeRaw
+      : "dark";
+
+  const effectiveTheme: "light" | "dark" =
+    themePref === "system" ? resolvedTheme : themePref;
+
+  const isDim = effectiveTheme === "dark";
+  const bgColor =
+    accent === "default"
+      ? isDim
+        ? "#ffffff"
+        : "#000000"
+      : isDim
+        ? ACCENT_HEX[accent].dark
+        : ACCENT_HEX[accent].light;
+
+  const fgColor = getContrastingFg(bgColor);
+
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="20" fill="${bgColor}" />
+  <text x="50" y="58" text-anchor="middle" font-size="42" font-family="system-ui,sans-serif" font-weight="700" fill="${fgColor}">M</text>
+</svg>`;
+
+  return new NextResponse(svg, {
+    headers: {
+      "Content-Type": "image/svg+xml; charset=utf-8",
+      "Cache-Control": "no-store, max-age=0",
+    },
+  });
+}
