@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/article-body";
 import { SiteHeader } from "@/components/site-header";
 import { getAllSlugs, getArticleBySlug } from "@/lib/articles";
+import { SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 
 type PageProps = {
@@ -21,9 +22,32 @@ export async function generateMetadata({
   if (!article) {
     return { title: "Не найдено" };
   }
+
+  const path = `/articles/${slug}`;
+  const description =
+    article.description ??
+    `Статья «${article.title}» на ${SITE_NAME}.`;
+
   return {
     title: article.title,
-    description: article.description,
+    description,
+    openGraph: {
+      type: "article",
+      title: article.title,
+      description,
+      url: path,
+      siteName: SITE_NAME,
+      locale: "ru_RU",
+      publishedTime: article.date,
+    },
+    twitter: {
+      card: "summary",
+      title: article.title,
+      description,
+    },
+    alternates: {
+      canonical: path,
+    },
   };
 }
 

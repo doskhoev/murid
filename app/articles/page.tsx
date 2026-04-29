@@ -1,6 +1,22 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
 import { getAllArticleSummaries } from "@/lib/articles";
+import { SITE_DESCRIPTION } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Статьи",
+  description:
+    "Все публикации сайта: справочные материалы в формате Markdown из репозитория.",
+  openGraph: {
+    title: "Статьи",
+    description: SITE_DESCRIPTION,
+    url: "/articles",
+  },
+  alternates: {
+    canonical: "/articles",
+  },
+};
 
 export default function ArticlesPage() {
   const articles = getAllArticleSummaries();

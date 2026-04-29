@@ -1,5 +1,20 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
+import { SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Главная",
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: `${SITE_NAME} — справочник`,
+    description: SITE_DESCRIPTION,
+    url: "/",
+  },
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function Home() {
   return (
