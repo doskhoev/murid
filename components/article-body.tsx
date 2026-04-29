@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
+import { rehypeDirAuto } from "@/lib/rehype-dir-auto";
 
 type ArticleBodyProps = {
   markdown: string;
@@ -11,7 +12,7 @@ export function ArticleBody({ markdown }: ArticleBodyProps) {
     <div className="markdown-body">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeSanitize]}
+        rehypePlugins={[rehypeSanitize, rehypeDirAuto]}
       >
         {markdown}
       </ReactMarkdown>

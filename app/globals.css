@@ -416,6 +416,12 @@
   margin-bottom: 0.25rem;
 }
 
+/* Явный RTL после разрешения dir (auto/rtl) — выравнивание по началу строки для арабского */
+.markdown-body :where(p, h1, h2, h3, h4, h5, h6, blockquote, li)[dir="rtl"],
+.markdown-body :where(td, th)[dir="rtl"] {
+  text-align: start;
+}
+
 .markdown-body blockquote {
   margin: 1rem 0;
   border-left: 4px solid var(--border);
